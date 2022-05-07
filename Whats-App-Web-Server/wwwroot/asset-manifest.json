@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.17e0eedd.css",
+    "main.js": "/static/js/main.6761ad42.js",
+    "static/media/tigers.mp4": "/static/media/tigers.e58c9d21226506c6d65c.mp4",
+    "static/media/eminem.mp3": "/static/media/eminem.e1cc713f9f6230dc1a02.mp3",
+    "static/media/Tommy.jpeg": "/static/media/Tommy.430e81f312151465e9d5.jpeg",
+    "static/media/background.png": "/static/media/background.20fc043690a9b7673eb3.png",
+    "static/media/pic2-woman.jpg": "/static/media/pic2-woman.9a8ea3ace46291c61595.jpg",
+    "static/media/background-beige2.jpg": "/static/media/background-beige2.1b855f1044dd05fbcb29.jpg",
+    "static/media/car.jpg": "/static/media/car.d1a00a672166814afa1e.jpg",
+    "static/media/enjoy.jpeg": "/static/media/enjoy.400dda320c12c038dd4f.jpeg",
+    "static/media/background-beige.jpg": "/static/media/background-beige.6040226cffb5c7811945.jpg",
+    "static/media/avatar5.png": "/static/media/avatar5.820c72eec1c4c02d982a.png",
+    "static/media/avatar9.png": "/static/media/avatar9.664e8243c2285396248f.png",
+    "index.html": "/index.html",
+    "main.17e0eedd.css.map": "/static/css/main.17e0eedd.css.map",
+    "main.6761ad42.js.map": "/static/js/main.6761ad42.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.17e0eedd.css",
+    "static/js/main.6761ad42.js"
+  ]
+}
