@@ -5,5 +5,6 @@ namespace Whats_App_Web_Server.Models
         public string? RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
     }
 }

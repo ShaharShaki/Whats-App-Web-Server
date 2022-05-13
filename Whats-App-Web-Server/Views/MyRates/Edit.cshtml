@@ -1,0 +1,14 @@
+﻿@model Rate
+
+<form asp-action="Edit">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <label>Rate</label>
+    <input name="Rate" value="@Model.givenRate" />
+
+
+    <label>Description</label>
+    <input name="description" value="@Model.Description" />
+
+    <input type="submit" />
+</form>

@@ -1,0 +1,35 @@
+﻿@model List<Rate>
+
+<a asp-action="Create">Create new </a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> Id </th>
+            <th> Rate </th>
+            <th> Description </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rate in Model)
+        {
+            <tr>
+                <td>
+                    @rate.Id
+                </td>
+                <td>
+                    @rate.givenRate
+                </td>
+                <td>
+                    @rate.Description
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@rate.Id">Details </a>
+                    <a asp-action="Edit" asp-route-id="@rate.Id">Edit </a>
+                    <a asp-action="Delete" asp-route-id="@rate.Id">Delete </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
