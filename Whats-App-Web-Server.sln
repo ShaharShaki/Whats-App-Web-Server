@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Whats-App-Web-Server", "Whats-App-Web-Server\Whats-App-Web-Server.csproj", "{882ABDBC-9706-4113-9F87-4C32AADF64AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "What-App-Web-API", "What-App-Web-API\What-App-Web-API.csproj", "{5544C1F5-8E70-4586-BD46-B77073A3FEA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Liron-api", "What-App-Web-API\Liron-api.csproj", "{5544C1F5-8E70-4586-BD46-B77073A3FEA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
