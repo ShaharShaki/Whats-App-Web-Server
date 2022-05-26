@@ -4,7 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Rates</h1>
+
+<form asp-action=Index class="input-group mb-3">
+    <input id="create" name="query" type="text" class="form control" placeholder="Search rate" aria-label="Search rate"/>
+    <button class="btn-primary btn-outline-secondary" type="submit" value="search" id="button-addon2">Search</button>
+</form>
 
 <p>
     <a asp-action="Create">Create New</a>

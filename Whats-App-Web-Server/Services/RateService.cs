@@ -11,6 +11,25 @@ namespace Whats_App_Web_Server.Services
             return rates;
         }
 
+        public List<Rate> getSearch(int query)
+        {
+            List<Rate> returnList = new List<Rate>();
+            if (query >= 0 && query <= 5)
+            {
+                Rate rate = rates.Find(x => x.givenRate == query);
+                if (rate != null)
+                {
+                    returnList.Add(rate);
+                }
+                return returnList;
+                
+            }
+            else
+            {
+                return rates;
+            }
+        }
+
         public Rate Get(int id)
         {
             return rates.Find(x => x.Id == id);

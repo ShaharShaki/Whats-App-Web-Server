@@ -26,6 +26,13 @@ namespace Whats_App_Web_Server.Controllers
             return View(_service.GetAll());
         }
 
+        [HttpPost]
+        // GET: Rates
+        public IActionResult Index(int query)
+        {
+            return View(_service.getSearch(query));
+        }
+
         // GET: Rates/Details/5
         public IActionResult Details(int? id)
         {

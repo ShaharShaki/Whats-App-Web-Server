@@ -13,7 +13,6 @@ namespace Whats_App_Web_Server.Services
         public void Edit(int id, int rate, string description);
 
         public void Delete(int id);
-
-
+        public List<Rate> getSearch(int query);
     }
 }
