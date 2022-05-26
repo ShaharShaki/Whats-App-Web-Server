@@ -29,5 +29,12 @@ public class Conversation
         {
             return this.Messages.Find(message => message.Id == id);
         }
+
+        public void DeleteMessage(int id)
+        {
+            Message message = this.GetMessage(id);
+            if (message != null)
+                this.Messages.Remove(message);
+        }
     }
 }

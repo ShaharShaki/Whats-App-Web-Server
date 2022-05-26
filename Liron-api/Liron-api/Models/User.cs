@@ -32,10 +32,29 @@ public class User
 			this.Contacts.Add(newUser);
 		}
 
+		public void RemoveContact(User removeUser)
+		{
+			this.Contacts.Remove(removeUser);
+		}
+
 		public void AddConversation(Conversation conversation)
         {
 			this.Conversations.Add(conversation);
         }
+
+		public void CreateNewConversation(User newUser)
+		{
+			//  if the user doesnt exist.
+			User u = this.Contacts.Find(user => user.Id == newUser.Id);
+			if (u == null)
+            {
+				this.AddContact(newUser);
+				Conversation newConversation = new Conversation(this, newUser);
+				this.AddConversation(newConversation);
+			}
+		}
+
+
 		public Conversation GetConversationWith(User user)
 		{
 			Conversation conversation =  this.Conversations.Find(conversation => conversation.User1.Id == user.Id || conversation.User2.Id == user.Id);
