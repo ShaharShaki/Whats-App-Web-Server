@@ -6,10 +6,10 @@ public class InvitationsPostRequest
 		public string From { get; set; }
 		public string To { get; set; }
 		public string Server { get; set; }
-		public InvitationsPostRequest(string id, string name, string server)
+		public InvitationsPostRequest(string from, string to, string server)
 		{
-			this.From = id;
-			this.To = name;
+			this.From = from;
+			this.To = to;
 			this.Server = server;
 		}
 	}

@@ -10,7 +10,6 @@ public class ContactsPutRequest
 			this.Name = name;
 			this.Server = server;
 		}
-
 	}
 }
 

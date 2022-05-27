@@ -42,7 +42,7 @@ public class User
 			this.Conversations.Add(conversation);
         }
 
-		public void CreateNewConversation(User newUser)
+		public bool CreateNewConversation(User newUser)
 		{
 			//  if the user doesnt exist.
 			User u = this.Contacts.Find(user => user.Id == newUser.Id);
@@ -51,7 +51,9 @@ public class User
 				this.AddContact(newUser);
 				Conversation newConversation = new Conversation(this, newUser);
 				this.AddConversation(newConversation);
+				return true;
 			}
+			return false;
 		}
 
 
