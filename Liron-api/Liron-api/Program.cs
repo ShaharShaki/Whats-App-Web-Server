@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Liron_api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+
+//SignalR
+builder.Services.AddSignalR();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -15,7 +23,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
@@ -27,7 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidIssuer = builder.Configuration["JWTParams:Issuer"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTParams:SecretKey"]))
     };
-});
+});*/
 
 
 builder.Services.AddCors(option =>
@@ -38,7 +46,7 @@ builder.Services.AddCors(option =>
             builder
             .AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader().WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
         });
 });
 
@@ -55,8 +63,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("Allow All");
 app.UseHttpsRedirection();
-app.UseAuthentication();
+
+//SignalR
+app.UseRouting();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<HubMessage>("/hubMessage");
+});
 
 app.MapControllers();
 

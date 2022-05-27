@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Globalization;
 using Liron_api.Models;
 
 namespace WhatsAppAPIService.Controllers
@@ -12,6 +13,7 @@ namespace WhatsAppAPIService.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        DateTime _dt = DateTime.Now;
         public IConfiguration _configuration;
         public static IService _service = new ContactsService();
 
@@ -41,7 +43,8 @@ namespace WhatsAppAPIService.Controllers
                 return NotFound();
             }
 
-            User newUser = new User(newContact.Id, newContact.Name, newContact.Server, "17:20", "3333");
+            string now = _dt.ToString("T", DateTimeFormatInfo.InvariantInfo);
+            User newUser = new User(newContact.Id, newContact.Name, newContact.Server, now, "3333");
             bool createSuccess = currentUser.CreateNewConversation(newUser);
             if (createSuccess)
                 return StatusCode(201);
@@ -58,7 +61,8 @@ namespace WhatsAppAPIService.Controllers
                 return NotFound();
             }
 
-            User newUser = new User(invitation.From, fromName, invitation.Server, "17:20", "3333");
+            string now = _dt.ToString("T", DateTimeFormatInfo.InvariantInfo);
+            User newUser = new User(invitation.From, fromName, invitation.Server, now, "3333");
             bool createSuccess = currentUser.CreateNewConversation(newUser);
             if (createSuccess)
                 return StatusCode(201);
@@ -179,7 +183,8 @@ namespace WhatsAppAPIService.Controllers
             if (currentUser.GetConversationWith(otherUser) == null)
                 return NotFound();
 
-            currentUser.GetConversationWith(otherUser).CreateMessage(message.Content, "19:00", amIsent);
+            string now = _dt.ToString("T", DateTimeFormatInfo.InvariantInfo);
+            currentUser.GetConversationWith(otherUser).CreateMessage(message.Content, now, amIsent);
             return StatusCode(201);
         }
 
@@ -203,7 +208,8 @@ namespace WhatsAppAPIService.Controllers
             if (currentUser.GetConversationWith(otherUser) == null)
                 return NotFound();
 
-            currentUser.GetConversationWith(otherUser).CreateMessage(message.Content, "19:00", amIsent);
+            string now = _dt.ToString("T", DateTimeFormatInfo.InvariantInfo);
+            currentUser.GetConversationWith(otherUser).CreateMessage(message.Content, now, amIsent);
             return StatusCode(201);
         }
 
@@ -294,7 +300,8 @@ namespace WhatsAppAPIService.Controllers
                 return NotFound();
             }
 
-            _service.AddNewUser(new User(id, name, "localhost:7061", "17:03", password));
+            string now = _dt.ToString("T", DateTimeFormatInfo.InvariantInfo);
+            _service.AddNewUser(new User(id, name, "localhost:7061", now, password));
             return Ok();
         }
 

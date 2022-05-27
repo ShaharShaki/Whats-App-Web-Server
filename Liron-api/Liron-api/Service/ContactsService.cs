@@ -1,5 +1,7 @@
 ﻿using Liron_api.Models;
 using Microsoft.AspNetCore.Http;
+using System.Globalization;
+
 
 namespace Liron_api.Service
 {
@@ -8,20 +10,21 @@ namespace Liron_api.Service
         private static List<User> Contacts = new List<User>();
         public ContactsService()
         {
+           
             /*User(string id, string name, string server, string lastdate, string password)*/
 
-            User liron = new User("Liron", "liron", "localhost:7061", "17:00", "1111");
-            User erel = new User("Erel", "erel", "localhost:7061", "17:10", "2222");
+            User liron = new User("Liron", "liron", "localhost:7061", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), "1111");
+            User erel = new User("Erel", "erel", "localhost:7061", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), "2222");
             liron.AddContact(erel);
             erel.AddContact(liron);
 
             Conversation lironConversation = new Conversation(liron, erel);
-            lironConversation.CreateMessage("hi liron", "17:00", false);
-            lironConversation.CreateMessage("hi erel", "17:01", true);
+            lironConversation.CreateMessage("hi liron", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), false);
+            lironConversation.CreateMessage("hi erel", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), true);
 
             Conversation omerConversation = new Conversation(liron, erel);
-            omerConversation.CreateMessage("hi liron", "17:00", true);
-            omerConversation.CreateMessage("hi erel", "17:01", false);
+            omerConversation.CreateMessage("hi liron", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), true);
+            omerConversation.CreateMessage("hi erel", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), false);
 
             liron.AddConversation(lironConversation);
             erel.AddConversation(omerConversation);
