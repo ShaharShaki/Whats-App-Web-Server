@@ -42,8 +42,10 @@ namespace WhatsAppAPIService.Controllers
             }
 
             User newUser = new User(newContact.Id, newContact.Name, newContact.Server, "17:20", "3333");
-            currentUser.CreateNewConversation(newUser);
-            return StatusCode(201);
+            bool createSuccess = currentUser.CreateNewConversation(newUser);
+            if (createSuccess)
+                return StatusCode(201);
+            return NoContent();
         }
 
 
@@ -57,8 +59,10 @@ namespace WhatsAppAPIService.Controllers
             }
 
             User newUser = new User(invitation.From, fromName, invitation.Server, "17:20", "3333");
-            currentUser.CreateNewConversation(newUser);
-            return StatusCode(201);
+            bool createSuccess = currentUser.CreateNewConversation(newUser);
+            if (createSuccess)
+                return StatusCode(201);
+            return NoContent();
         }
 
 
@@ -147,6 +151,9 @@ namespace WhatsAppAPIService.Controllers
                 return NotFound();
             }
 
+            if (currentUser.GetConversationWith(otherUser) == null)
+                return NotFound();
+
             List<Message> conversation = currentUser.GetConversationWith(otherUser).Messages;
             return Ok(conversation);
         }
@@ -169,6 +176,33 @@ namespace WhatsAppAPIService.Controllers
                 return NotFound();
             }
 
+            if (currentUser.GetConversationWith(otherUser) == null)
+                return NotFound();
+
+            currentUser.GetConversationWith(otherUser).CreateMessage(message.Content, "19:00", amIsent);
+            return StatusCode(201);
+        }
+
+
+
+        [HttpPost("/transfer")]
+        public IActionResult TransferMessage(bool amIsent, [Bind("from,to,content")] TransferPostRequest message)
+        {
+            User currentUser = _service.GetContact(message.To);
+            if (currentUser == null)
+            {
+                return NotFound();
+            }
+
+            User otherUser = _service.GetContact(message.From);
+            if (otherUser == null)
+            {
+                return NotFound();
+            }
+
+            if (currentUser.GetConversationWith(otherUser) == null)
+                return NotFound();
+
             currentUser.GetConversationWith(otherUser).CreateMessage(message.Content, "19:00", amIsent);
             return StatusCode(201);
         }
@@ -190,8 +224,13 @@ namespace WhatsAppAPIService.Controllers
                 return NotFound();
             }
 
+            if (currentUser.GetConversationWith(otherUser) == null)
+                return NotFound();
+
             Conversation conversation = currentUser.GetConversationWith(otherUser);
             Message message = conversation.GetMessage(messageId);
+            if (message == null)
+                return NotFound();
             return Ok(message);
         }
 
@@ -212,9 +251,37 @@ namespace WhatsAppAPIService.Controllers
                 return NotFound();
             }
 
+            if (currentUser.GetConversationWith(otherUser) == null)
+                return NotFound();
+
             currentUser.GetConversationWith(otherUser).DeleteMessage(messageId);
             return NoContent();
         }
+
+        [HttpPut("/contacts/{id}/messages/{messageId}")]
+        public IActionResult UpdateMessage(string id, int messageId, string currentId, [Bind("content")] MessagePostRequest message)
+        {
+            User currentUser = _service.GetContact(currentId);
+            if (currentUser == null)
+                return NotFound();
+            
+
+            User otherUser = _service.GetContact(id);
+            if (otherUser == null)
+                return NotFound();
+            
+            // no conversation
+            if (currentUser.GetConversationWith(otherUser) == null)
+                return NotFound();
+
+            // no message
+            if (currentUser.GetConversationWith(otherUser).GetMessage(messageId) == null)
+                return NotFound();
+
+            currentUser.GetConversationWith(otherUser).GetMessage(messageId).Content = message.Content;
+            return NoContent();
+        }
+
 
 
 
@@ -232,30 +299,54 @@ namespace WhatsAppAPIService.Controllers
         }
 
 
-/*        [HttpPost]
-        public IActionResult Post(string username, string password)
+        [HttpPost("/login/{id}/{password}")]
+        public IActionResult Login(string id,string password)
         {
-            // add user validation user
-            if (true)
-            {
-                var claims = new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, _configuration["JWTParams:Subject"]),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                    new Claim("UserId", username)
-                };
+            User currentUser = _service.GetContact(id);
 
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTParams:SecretKey"]));
-                var mac = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(
-                    _configuration["JWTParams:Issuer"],
-                    _configuration["JWTParams:Audience"],
-                    claims,
-                    expires: DateTime.UtcNow.AddMinutes(20),
-                    signingCredentials: mac);
-                return Ok(new JwtSecurityTokenHandler().WriteToken(token));
-            }
-        }*/
+            // user dosen't exist.
+            if (currentUser == null)
+                return NotFound();
+
+            // wrong password.
+            if (currentUser.Password != password)
+                return NoContent();
+
+            // correct password
+            return Ok();
+        }
+
+        [HttpPost("/serverdb")]
+        public IActionResult GetServerUsers()
+        {
+            return Ok(_service.GetServerUsers());
+        }
+
+
+        /*        [HttpPost]
+                public IActionResult Post(string username, string password)
+                {
+                    // add user validation user
+                    if (true)
+                    {
+                        var claims = new[]
+                        {
+                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["JWTParams:Subject"]),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                            new Claim("UserId", username)
+                        };
+
+                        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTParams:SecretKey"]));
+                        var mac = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                        var token = new JwtSecurityToken(
+                            _configuration["JWTParams:Issuer"],
+                            _configuration["JWTParams:Audience"],
+                            claims,
+                            expires: DateTime.UtcNow.AddMinutes(20),
+                            signingCredentials: mac);
+                        return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+                    }
+                }*/
     }
 }

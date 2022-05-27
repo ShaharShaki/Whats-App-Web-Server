@@ -46,6 +46,11 @@ namespace Liron_api.Service
             return u.Contacts;
         }
 
+        public List<User> GetServerUsers()
+        {
+            return Contacts;
+        }
+
 
         public List<APIUser> GetAllContactsAPI(string username)
             {
