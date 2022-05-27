@@ -299,18 +299,28 @@ namespace WhatsAppAPIService.Controllers
         }
 
 
-/*        [HttpPost("/login/{id}/{password}")]
+        [HttpPost("/login/{id}/{password}")]
         public IActionResult Login(string id,string password)
         {
-            // user is already exists
-            if (_service.GetContact(id) != null)
-            {
-                return NotFound();
-            }
+            User currentUser = _service.GetContact(id);
 
-            _service.AddNewUser(new User(id, name, "localhost:7061", "17:03", password));
+            // user dosen't exist.
+            if (currentUser == null)
+                return NotFound();
+
+            // wrong password.
+            if (currentUser.Password != password)
+                return NoContent();
+
+            // correct password
             return Ok();
-        }*/
+        }
+
+        [HttpPost("/serverdb")]
+        public IActionResult GetServerUsers()
+        {
+            return Ok(_service.GetServerUsers());
+        }
 
 
         /*        [HttpPost]

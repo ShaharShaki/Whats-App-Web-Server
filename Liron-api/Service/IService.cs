@@ -10,5 +10,6 @@ namespace Liron_api.Service
         public List<APIUser> GetAllContactsAPI(string username);
         public APIUser GetContactAPI(string id);
         public void AddNewUser(User user);
+        public List<User> GetServerUsers();
     }
 }
