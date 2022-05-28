@@ -2,6 +2,8 @@
 
 Welcome to our App!
 in order to see the ratings page, please run 'Whats-App-Web-Server'.
+if you want to see the chat app and go to ratings page, please go to:
+http://localhost:5268/index.html
 
 in order to run the API, please run Liron-api inside Liron-api folder.
 
