@@ -17,7 +17,7 @@ namespace Liron_api.Service
             User erel = new User("Erel", "erel", "localhost:7061", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), "2222");
             liron.AddContact(erel);
             erel.AddContact(liron);
-
+            
             Conversation lironConversation = new Conversation(liron, erel);
             lironConversation.CreateMessage("hi liron", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), false);
             lironConversation.CreateMessage("hi erel", DateTime.Now.ToString("T", DateTimeFormatInfo.InvariantInfo), true);
@@ -31,6 +31,7 @@ namespace Liron_api.Service
 
             Contacts.Add(liron);
             Contacts.Add(erel);
+            
         }
 
         public void AddNewUser(User user)

@@ -5,15 +5,17 @@ public class Conversation
 	{
 		public List<Message> Messages { get; set; }
         public string Last { get; set; }
-        public User User1;
-        public User User2;
+       // public User User1;
+     //   public User User2;
+        public User[] Users;
 		public int MessageId;
 		public Conversation(User user1, User user2)
         {
             this.Messages = new List<Message>();
             this.MessageId = 1;
-            this.User1 = user1;
-            this.User2 = user2;
+            this.Users = new User[2];
+            this.Users[1] = user1;
+            this.Users[2] = user2;
             this.Last = "";
         }
 

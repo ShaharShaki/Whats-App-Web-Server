@@ -16,7 +16,7 @@ public class User
 			this.Id = id;
 			this.Name = name;
 			this.Server = server;
-			this.Lastdate = lastdate;
+			this.Lastdate = lastdate;	
 			this.Contacts = new List<User>();
 			this.Password = password;
 			this.Conversations = new List<Conversation>();
@@ -59,7 +59,7 @@ public class User
 
 		public Conversation GetConversationWith(User user)
 		{
-			Conversation conversation =  this.Conversations.Find(conversation => conversation.User1.Id == user.Id || conversation.User2.Id == user.Id);
+			Conversation conversation =  this.Conversations.Find(conversation => conversation.Users[1].Id == user.Id || conversation.Users[2].Id == user.Id);
 			return conversation;
 /*			if (conversation == null)
             {
