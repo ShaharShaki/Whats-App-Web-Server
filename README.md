@@ -22,3 +22,5 @@ after the register and the login, you will be promoted to the chat app:
 enjoy using the app!
 
 ![image](https://user-images.githubusercontent.com/47318413/170838029-5eccf51f-71fe-454c-8627-f57a3b0f6733.png)
+
+*WE GOT AN APPROVAL NOT TO IMPLEMENT JWT*
