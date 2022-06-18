@@ -58,6 +58,7 @@ namespace Liron_api.Service
         public List<APIUser> GetAllContactsAPI(string username)
             {
                 User currentUser = GetContact(username);
+
                 if (currentUser == null)
                 {
                     return null;

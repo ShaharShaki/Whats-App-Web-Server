@@ -39,7 +39,7 @@ public class User
 
 		public void AddConversation(Conversation conversation)
         {
-			this.Conversations.Add(conversation);
+		//	this.Conversations.Add(conversation);
         }
 
 		public bool CreateNewConversation(User newUser)
@@ -59,7 +59,7 @@ public class User
 
 		public Conversation GetConversationWith(User user)
 		{
-			Conversation conversation =  this.Conversations.Find(conversation => conversation.User1.Id == user.Id || conversation.User2.Id == user.Id);
+			Conversation conversation =  this.Conversations.Find(conversation => conversation.Users[1].Id == user.Id || conversation.Users[2].Id == user.Id);
 			return conversation;
 /*			if (conversation == null)
             {

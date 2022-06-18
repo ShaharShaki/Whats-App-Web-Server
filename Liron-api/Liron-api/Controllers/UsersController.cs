@@ -6,6 +6,15 @@ using System.Security.Claims;
 using System.Text;
 using System.Globalization;
 using Liron_api.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Liron_api.Data;
+using Liron_api.Models;
 
 namespace WhatsAppAPIService.Controllers
 {
@@ -16,11 +25,24 @@ namespace WhatsAppAPIService.Controllers
         DateTime _dt = DateTime.Now;
         public IConfiguration _configuration;
         public static IService _service = new ContactsService();
+        private readonly Liron_apiContext _context;
 
-        public UsersController(IConfiguration config)
+ 
+        public UsersController(IConfiguration config, Liron_apiContext context)
         {
             _configuration = config;
+            _context = context;
         }
+        /*
+        [HttpGet("/test")]
+        public async Task<IActionResult> Index()
+        {
+            //    return _context.User != null ? 
+            //              View(await _context.User.ToListAsync()) :
+            //               Problem("Entity set 'Liron_apiContext.User'  is null.");
+            return ((IActionResult)await _context.User.ToListAsync());
+        }
+        */
 
         [HttpGet("/contacts")]
         public IActionResult GetUserContacts(string id)

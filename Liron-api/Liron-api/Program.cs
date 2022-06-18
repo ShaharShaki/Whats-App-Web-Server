@@ -4,8 +4,14 @@ using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Liron_api.Hubs;
+using Microsoft.EntityFrameworkCore;
+using Liron_api.Data;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<Liron_apiContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Liron_apiContext") ?? throw new InvalidOperationException("Connection string 'Liron_apiContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllers();

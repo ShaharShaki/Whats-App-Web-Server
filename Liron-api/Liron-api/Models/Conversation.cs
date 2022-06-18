@@ -1,22 +1,35 @@
 ﻿using System;
-namespace Liron_api.Models
-{
+namespace Liron_api.Models;
+
+using System.ComponentModel.DataAnnotations;
+
 public class Conversation
 	{
-		public List<Message> Messages { get; set; }
+        [Key]
+        public int MessageId { get; set; }
+        public List<Message> Messages { get; set; }
         public string Last { get; set; }
-        public User User1;
-        public User User2;
-		public int MessageId;
-		public Conversation(User user1, User user2)
+        public User[] Users { get; set; }
+        // public User User1 { get; set; }
+        // public User User2 { get; set; }
+     
+        public Conversation(User user1, User user2)
         {
             this.Messages = new List<Message>();
             this.MessageId = 1;
-            this.User1 = user1;
-            this.User2 = user2;
+            this.Users = new User[2];
+            this.Users[1] = user1;
+            this.Users[2] = user2;
             this.Last = "";
         }
 
+        public Conversation()
+        {
+            this.Messages = new List<Message>();
+            this.MessageId = 1;
+            this.Users = new User[2];
+            this.Last = "";
+        }
         public void CreateMessage (string content, string created, bool sent)
         {
 			Message newMes = new Message(MessageId, content, created, sent);
@@ -37,4 +50,3 @@ public class Conversation
                 this.Messages.Remove(message);
         }
     }
-}
